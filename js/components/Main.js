@@ -1,13 +1,13 @@
 var React = require('react');
 var Header = require('./Header');
-var Departments = require('./Departments');
+var { RouteHandler } = require('react-router');
 
 var Main = React.createClass({
     render() {
         return (
             <div>
                 <Header />
-                <Departments />
+                <RouteHandler />
             </div>
         );
     }
