@@ -1,6 +1,7 @@
 var React = require('react');
 var Router = require('react-router');
 var Api = require('../Utils/Api');
+var ReviewCard = require('../Components/ReviewCard');
 
 var CourseDetail = React.createClass({
     componentDidMount() {
@@ -27,16 +28,20 @@ var CourseDetail = React.createClass({
     render() {
         var id = this.props.params.id;
         var reviews = this.state.reviews.map((review) =>
-            <li key={review.id}>{review.review_text}</li>
+            <ReviewCard key={review.id} 
+                        review={review.review_text}
+                        workload={review.workload_text} />
         );
         var loader = <p>Loading...</p>;
         var deptHtml = (
             <div>
                 <h4>{this.state.name}</h4>
-                <ul>{reviews}</ul>
+                { reviews }
             </div>
         );
-        return <div> { this.state.name.length === 0 ? loader : deptHtml } </div>;
+        return (
+         <div> { this.state.name.length === 0 ? loader : deptHtml } </div>
+        )
 
     }
 });
