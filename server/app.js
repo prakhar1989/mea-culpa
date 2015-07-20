@@ -9,6 +9,8 @@ app.all('/*', function(req, res, next) {
   next();
 });
 
+app.set('port', (process.env.PORT || 5000));
+
 app.get('/', function(req, res) {
     res.send(JSON.stringify({msg: "mea culpa!"}));
 });
@@ -27,6 +29,6 @@ app.get('/api/course/:id', function(req, res) {
     });
 })
 
-var server = app.listen(3000, function() {
-    console.log("App started on :" + server.address().port);
+var server = app.listen(app.get('port'), function() {
+    console.log("App started on :" + app.get('port'));
 });
