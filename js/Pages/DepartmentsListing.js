@@ -4,7 +4,7 @@ var DepartmentCard = require('../Components/DepartmentCard');
 
 var DepartmentsListing = React.createClass({
     render() {
-        var url = "http://api.culpa.info/courses/department_id/";
+        var url = "/#/department/"
         var depts = data.departments.map((d) =>
             <DepartmentCard title={d.title} key={d.id} url={url + d.id} />
         );
