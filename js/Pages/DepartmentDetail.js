@@ -1,16 +1,18 @@
 var React = require('react');
 var Router = require('react-router');
-var axios = require('axios');
+var Api = require('../Utils/Api');
 
 var DepartmentDetail = React.createClass({
     componentDidMount() {
         var id = this.props.params.id;
-        axios.get('http://localhost:3000/api/department/' + id).then(function(data){
-            var {info, courses} = data.data;
-            if (this.isMounted()) {
-                this.setState({ name: info.name, courses: courses });
-            }
-        }.bind(this));
+        Api.getDepartmentDetail(id)
+           .then((data) => {
+                var { info, courses } = data.data;
+                var name = (info === undefined || courses === undefined) ? "No Data Found!" : info.name;
+                if (this.isMounted()) {
+                    this.setState({ name: name, courses: courses });
+                }
+           });
     },
     getInitialState() {
         return {
@@ -23,14 +25,15 @@ var DepartmentDetail = React.createClass({
         var courses = this.state.courses.map((course) =>
             <li key={course.id}> {course.name} - {course.number} </li>
         );
-
-        return (
+        var loader = <p>Loading...</p>;
+        var deptHtml = (
             <div>
                 <h2>{this.state.name}</h2>
                 <ul>{ courses }</ul>
             </div>
-
         );
+        return <div> { this.state.name.length === 0 ? loader : deptHtml } </div>;
+
     }
 });
 
