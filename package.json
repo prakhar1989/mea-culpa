@@ -4,7 +4,8 @@
   "description": "mobile web for culpa.info",
   "main": "./js/App.js",
   "scripts": {
-    "start": "node node_modules/webpack-dev-server/bin/webpack-dev-server.js --progress --colors --port 8090",
+    "start": "node server/app.js",
+    "dev": "node node_modules/webpack-dev-server/bin/webpack-dev-server.js --progress --colors --port 8090",
     "build": "webpack -p"
   },
   "author": "Prakhar Srivastav",
@@ -16,6 +17,7 @@
     "babel-core": "^5.4.3",
     "classnames": "^2.1.2",
     "express": "^4.13.1",
+    "extract-text-webpack-plugin": "^0.8.2",
     "react": "^0.13.3",
     "react-router": "^0.13.3",
     "webpack": "^1.9.11",
