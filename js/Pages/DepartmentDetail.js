@@ -23,7 +23,7 @@ var DepartmentDetail = React.createClass({
     render() {
         var id  = this.props.params.id;
         var courses = this.state.courses.map((course) =>
-            <li key={course.id}> {course.name} - {course.number} </li>
+            <li key={course.id}><a href={"/#/course/" + course.id}>{course.name}</a></li>
         );
         var loader = <p>Loading...</p>;
         var deptHtml = (

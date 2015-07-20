@@ -39,7 +39,7 @@ function getCourseDetail(courseId) {
             .then(function(arr) {
                 return {
                     info: arr[0].data.courses[0],
-                    courses: arr[1].data.reviews,
+                    reviews: arr[1].data.reviews,
                     status: "success"
                 }
             })
