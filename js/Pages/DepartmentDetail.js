@@ -1,6 +1,7 @@
 var React = require('react');
 var Router = require('react-router');
 var Api = require('../Utils/Api');
+var DepartmentCard = require('../Components/DepartmentCard');
 
 var DepartmentDetail = React.createClass({
     componentDidMount() {
@@ -23,16 +24,24 @@ var DepartmentDetail = React.createClass({
     render() {
         var id  = this.props.params.id;
         var courses = this.state.courses.map((course) =>
-            <li key={course.id}><a href={"/#/course/" + course.id}>{course.name}</a></li>
+            <DepartmentCard title={course.name} key={course.id} url={'/#/course/' + course.id} />
         );
         var loader = <p>Loading...</p>;
         var deptHtml = (
             <div>
-                <h2>{this.state.name}</h2>
-                <ul>{ courses }</ul>
+                <h4>{this.state.name}</h4>
+                { courses }
             </div>
         );
-        return <div> { this.state.name.length === 0 ? loader : deptHtml } </div>;
+        return (
+            <div className="mdl-layout">
+                <main classNameName="mdl-layout__content">
+                    <div className="demo-grid-ruler mdl-grid">
+                        { this.state.name.length === 0 ? loader : deptHtml }
+                    </div>
+                </main>
+            </div>
+        );
 
     }
 });

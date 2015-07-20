@@ -3,3 +3,13 @@ html, body {
     margin: 0;
     padding: 0;
 }
+
+#app {
+    margin: 0px auto;
+}
+.mdl-card {
+    min-height: 100px;
+}
+.mdl-card__title {
+    text-transform: capitalize;
+}

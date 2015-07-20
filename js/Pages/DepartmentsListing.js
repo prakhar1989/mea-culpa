@@ -9,7 +9,7 @@ var DepartmentsListing = React.createClass({
             <DepartmentCard title={d.title} key={d.id} url={url + d.id} />
         );
         return (
-            <div className="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--overlay-drawer-button">
+            <div className="mdl-layout">
                 <main classNameName="mdl-layout__content">
                     <div className="demo-grid-ruler mdl-grid">
                         { depts }

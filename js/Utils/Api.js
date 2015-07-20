@@ -1,6 +1,6 @@
 var axios = require('axios');
 
-const URL = "http://localhost:3000/api"
+const URL = "https://nameless-dawn-4159.herokuapp.com/api";
 
 module.exports = {
     getDepartmentDetail : (id) => axios.get(URL + '/department/' + id),
