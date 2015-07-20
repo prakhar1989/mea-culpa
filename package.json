@@ -2,7 +2,7 @@
   "name": "mea-culpa",
   "version": "0.0.1",
   "description": "mobile web for culpa.info",
-  "main": "./js/app.js",
+  "main": "./js/App.js",
   "scripts": {
     "start": "node node_modules/webpack-dev-server/bin/webpack-dev-server.js --progress --colors --port 8090",
     "build": "webpack -p"
