@@ -1,22 +1,21 @@
 var React = require('react');
 var Router = require('react-router');
+var axios = require('axios');
 
 var DepartmentDetail = React.createClass({
+    componentDidMount() {
+        var id = this.props.params.id;
+        axios.get('http://localhost:3000/api/department/' + id).then(function(data){
+            var {info, courses} = data.data;
+            if (this.isMounted()) {
+                this.setState({ name: info.name, courses: courses });
+            }
+        }.bind(this));
+    },
     getInitialState() {
         return {
-            name: "Department Name",
-            courses: [
-                {
-                    id: 14,
-                    name: "Intro to programming",
-                    number: "COMS 1124"
-                },
-                {
-                    id: 55,
-                    name: "Python programming",
-                    number: "COMS 2324"
-                },
-            ]
+            name: "",
+            courses: []
         }
     },
     render() {

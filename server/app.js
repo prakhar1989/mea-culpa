@@ -16,14 +16,14 @@ app.get('/', function(req, res) {
 app.get('/api/department/:id', function(req, res) {
     var id = req.params.id;
     Api.getDepartmentDetail(id).then(function(data) {
-        res.send(JSON.stringify({data: data}));
+        res.send(JSON.stringify(data));
     });
 });
 
 app.get('/api/course/:id', function(req, res) {
     var id = req.params.id;
     Api.getCourseDetail(id).then(function(data) {
-        res.send(JSON.stringify({data: data}));
+        res.send(JSON.stringify(data));
     });
 })
 
