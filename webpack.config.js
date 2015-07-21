@@ -1,4 +1,5 @@
 var webpack = require('webpack');
+var yeticss = require('yeticss');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
@@ -11,15 +12,21 @@ module.exports = {
                 exclude: /node_modules/ 
             },
             {   
-                test: /\.css$/, 
-                loader: ExtractTextPlugin.extract('style-loader', "css-loader") 
+                test: /\.styl$/, 
+                loader: ExtractTextPlugin.extract('style-loader', 'css-loader!stylus-loader')
             }
+
         ]
     },
     plugins: [
-        new ExtractTextPlugin("build/styles.min.css", { allChunks: true })
+        new ExtractTextPlugin("styles.min.css", { allChunks: true })
     ],
+    stylus: {
+        use: [yeticss()]
+    },
     output: {
-        filename: "build/bundle.js"
+        path: "./build",
+        filename: "bundle.js"
+
     }
 };

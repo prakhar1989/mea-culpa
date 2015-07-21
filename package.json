@@ -5,30 +5,31 @@
   "main": "./js/App.js",
   "scripts": {
     "start": "node server/app.js",
-    "dev": "node node_modules/webpack-dev-server/bin/webpack-dev-server.js --progress --colors --port 8090",
-    "build": "webpack -p"
+    "dev": "webpack-dev-server --progress --colors --port 8090",
+    "build": "NODE_ENV=production webpack -p"
   },
   "author": "Prakhar Srivastav",
   "license": "MIT",
   "repository": "https://github.com/prakhar1989/react-surveyman",
   "dependencies": {
     "axios": "^0.5.4",
-    "babel": "^5.4.4",
-    "babel-core": "^5.4.3",
-    "classnames": "^2.1.2",
     "express": "^4.13.1",
-    "extract-text-webpack-plugin": "^0.8.2",
     "lodash": "^3.10.0",
     "react": "^0.13.3",
-    "react-router": "^0.13.3",
-    "webpack": "^1.9.11",
-    "webpack-dev-server": "^1.8.2"
+    "react-router": "^0.13.3"
   },
   "devDependencies": {
+    "babel": "^5.4.4",
+    "babel-core": "^5.4.3",
     "babel-eslint": "^3.1.23",
+    "extract-text-webpack-plugin": "^0.8.2",
     "babel-loader": "^5.1.2",
     "css-loader": "^0.15.5",
     "extract-text-webpack-plugin": "^0.8.2",
-    "style-loader": "^0.12.3"
+    "style-loader": "^0.12.3",
+    "stylus-loader": "^1.2.1",
+    "webpack": "^1.9.11",
+    "webpack-dev-server": "^1.8.2",
+    "yeticss": "^7.0.1"
   }
 }
