@@ -8,15 +8,7 @@ var DepartmentsListing = React.createClass({
         var depts = data.departments.map((d) =>
             <DepartmentCard title={d.title} key={d.id} url={url + d.id} />
         );
-        return (
-            <div className="mdl-layout">
-                <main classNameName="mdl-layout__content">
-                    <div className="demo-grid-ruler mdl-grid">
-                        { depts }
-                    </div>
-                </main>
-            </div>
-        );
+        return <div> { depts } </div>
     }
 });
 

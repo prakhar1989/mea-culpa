@@ -24,25 +24,18 @@ var DepartmentDetail = React.createClass({
     render() {
         var id  = this.props.params.id;
         var courses = this.state.courses.map((course) =>
-            <DepartmentCard title={course.name} key={course.id} url={'/#/course/' + course.id} />
+            <div className="cell" key={course.id}>
+                <p><a href={'/#/course/' + course.id}>{course.name}</a></p>
+            </div>
         );
         var loader = <p>Loading...</p>;
         var deptHtml = (
             <div>
-                <h4>{this.state.name}</h4>
+                <h3>{this.state.name}</h3>
                 { courses }
             </div>
         );
-        return (
-            <div className="mdl-layout">
-                <main classNameName="mdl-layout__content">
-                    <div className="demo-grid-ruler mdl-grid">
-                        { this.state.name.length === 0 ? loader : deptHtml }
-                    </div>
-                </main>
-            </div>
-        );
-
+        return <div> { this.state.name.length === 0 ? loader : deptHtml } </div>;
     }
 });
 

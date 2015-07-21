@@ -7,7 +7,9 @@ var Main = React.createClass({
         return (
             <div>
                 <Header />
-                <RouteHandler />
+                <div className="container">
+                    <RouteHandler />
+                </div>
             </div>
         );
     }

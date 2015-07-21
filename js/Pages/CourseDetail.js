@@ -33,10 +33,11 @@ var CourseDetail = React.createClass({
                         workload={review.workload_text} />
         );
         var loader = <p>Loading...</p>;
+        var error = <p>No reviews found</p>;
         var deptHtml = (
             <div>
                 <h4>{this.state.name}</h4>
-                { reviews }
+                { this.state.reviews.length > 0 ? reviews : error }
             </div>
         );
         return (

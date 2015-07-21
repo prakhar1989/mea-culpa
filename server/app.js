@@ -25,6 +25,9 @@ app.get('/api/department/:id', function(req, res) {
 app.get('/api/course/:id', function(req, res) {
     var id = req.params.id;
     Api.getCourseDetail(id).then(function(data) {
+        data["reviews"] = data.reviews.filter(function(r) {
+            return r.review_text !== undefined;
+        });
         res.send(JSON.stringify(data));
     });
 })
