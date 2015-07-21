@@ -27,6 +27,5 @@ module.exports = {
     output: {
         path: "./build",
         filename: "bundle.js"
-
     }
 };
