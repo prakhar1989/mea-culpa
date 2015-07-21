@@ -3,3 +3,5 @@ node_modules
 *.swp
 *.pyc
 *.idea/*
+build/*.js
+build/*.css
