@@ -4,7 +4,7 @@ var Header = React.createClass({
     render() {
         return <header id="banner">
             <div className="container">
-              <h1><a href="/#/">Mea Culpa</a></h1>
+              <h3><a href="/#/">Mea Culpa</a></h3>
             </div>
           </header>
     }

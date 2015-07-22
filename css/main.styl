@@ -1,17 +1,52 @@
 @import 'yeticss'
 
 $gray = #f2f4f6
+$shadow = 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12)
+$highlightBlue = #008dba
 
 body
-  border: 10px solid $gray
+  background-color: $gray
+
+a
+  color: darken($gray, 40)
+  font-style: italic
+
+i.highlight
+  color: $highlightBlue
+
+#app
+  max-width: 700px
+  margin: 0px auto
+  background-color: white
+  min-height: 600px
+  border: 1px solid darken($gray, 10%)
 
 div.reviewCard
-  padding: 20px 0px
-  border: 1px solid $gray
+  border: 1px solid darken($gray, 10%)
   margin-bottom: 20px
-  padding: 15px
   p
     margin: 0
+    padding: 35px 35px 20px 35px
+    font-size: 12px
+    line-height: 18px
+  div.review-actions
+    border-top: 1px solid darken($gray, 10%)
+    padding: 10px 30px 10px 35px
+  ul
+    margin: 0
+    display: inline-block
+    float: right
+  ul li
+    list-style-type: none
+    display: inline-block
+    margin: 0 10px
+    font-size: 20px
+  button
+    font-size: 10px
+    font-weight: bold
+    display: inline-block
+    text-transform: uppercase
+    padding: 6px 8px
 
 h2.deptCard 
   border: 1px solid $gray
@@ -48,3 +83,6 @@ section.results ul li
   font-size: 12px
   margin-bottom: 10px
   padding: 10px
+
+div.search-page input
+  font-size: 13px;

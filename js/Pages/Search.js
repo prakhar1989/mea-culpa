@@ -45,9 +45,9 @@ var Search = React.createClass({
     },
     render() {
         let { courses, departments, professors } = this.state.searchResults;
-        return <div>
+        return <div className="search-page">
             <div className='form-element'>
-                   <label htmlFor='search'>Search</label>
+                   <label htmlFor='search'>What are you looking for?</label>
                    <input type='text' id='search' ref="search" 
                           onKeyPress={debounce(this.handleKeyPress, 500)}
                           placeholder='Enter a course, professor, or a department'
