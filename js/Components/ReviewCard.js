@@ -8,12 +8,19 @@ var ReviewCard = React.createClass({
         return {
             isFav: false,
             isUpvoted: false,
-            isDownvoted: false
+            isDownvoted: false,
+            visibleText: "",
+            isExpanded: false
         }
     },
     propTypes: {
         review: React.PropTypes.string.isRequired,
         workload: React.PropTypes.string
+    },
+    componentDidMount() {
+        this.setState({
+            visibleText: this.trim(this.props.review)
+        });
     },
     trim(data, maxLength = MAXLENGTH) {
         if (data.length < maxLength) return data;
@@ -34,6 +41,13 @@ var ReviewCard = React.createClass({
             isUpvoted: this.state.isUpvoted && !this.state.isUpvoted,
             isDownvoted: !this.state.isDownvoted
         })
+    },
+    handleExpand(){
+        let text = this.state.isExpanded ? this.trim(this.props.review) : this.props.review;
+        this.setState({
+            visibleText: text,
+            isExpanded: !this.state.isExpanded
+        });
     },
     render() {
         var favClass = cx({
@@ -59,11 +73,12 @@ var ReviewCard = React.createClass({
 
         return (
             <div className="reviewCard">
-              <p> { this.trim(this.props.review) } </p>
+              <p> { this.state.visibleText } </p>
               <div className="review-actions">
                 <button className={buttonClass}
+                        onClick={this.handleExpand}
                         disabled={this.props.review.length < MAXLENGTH && 'disabled'} >
-                        Read More
+                        { this.state.isExpanded ? "Read Less" : "Read More" }
                 </button>
                 <ul>
                     <li onClick={this.addToFav}>
