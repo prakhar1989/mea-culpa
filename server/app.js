@@ -32,6 +32,13 @@ app.get('/api/course/:id', function(req, res) {
     });
 })
 
+app.get("/api/search/:query", function(req, res) {
+    var query = req.params.query;
+    Api.getSearchResults(query).then(function(data) {
+        res.send(JSON.stringify(data));
+    });
+});
+
 var server = app.listen(app.get('port'), function() {
     console.log("App started on :" + app.get('port'));
 });

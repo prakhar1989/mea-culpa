@@ -34,6 +34,32 @@ function getCourseReview(courseId) {
     return axios.get("http://api.culpa.info/reviews/course_id/" + courseId);
 }
 
+// resource is one of courses, departments, professors
+function getSearchResults(resource, query) {
+    return axios.get("http://api.culpa.info/" + resource + "/search/" + query);
+}
+
+
+function combineSearchResults(query) {
+    return axios.all([getSearchResults("courses", query), 
+                      getSearchResults("departments", query),
+                      getSearchResults("professors", query)])
+                .then(function(arr) {
+                    return {
+                        query: query,
+                        courses: arr[0].data.courses,
+                        departments: arr[1].data.departments,
+                        professors: arr[2].data.professors,
+                        status: "success"
+                    }
+                })
+                .catch(function(arr) {
+                    return {
+                        status: "error"
+                    }
+                });
+}
+
 function getCourseDetail(courseId) {
     return axios.all([getCourseInfo(courseId), getCourseReview(courseId)])
             .then(function(arr) {
@@ -52,5 +78,6 @@ function getCourseDetail(courseId) {
 
 module.exports = {
     getDepartmentDetail: getDepartmentDetail,
-    getCourseDetail: getCourseDetail
+    getCourseDetail: getCourseDetail,
+    getSearchResults: combineSearchResults
 }
