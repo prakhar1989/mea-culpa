@@ -1,6 +1,7 @@
 var express = require('express');
 var app = express();
 var Api = require('./api');
+var objectAssign = require('object-assign');
 
 // allow CORS
 app.all('/*', function(req, res, next) {
@@ -15,27 +16,34 @@ app.get('/', function(req, res) {
     res.send(JSON.stringify({msg: "mea culpa!"}));
 });
 
+// TODO: Try to make the responseTime thing DRY'er
 app.get('/api/department/:id', function(req, res) {
+    var start = +new Date();
     var id = req.params.id;
     Api.getDepartmentDetail(id).then(function(data) {
-        res.send(JSON.stringify(data));
+        var mergedResp = objectAssign(data, {responseTime: +new Date() - start});
+        res.send(JSON.stringify(mergedResp));
     });
 });
 
 app.get('/api/course/:id', function(req, res) {
+    var start = +new Date();
     var id = req.params.id;
     Api.getCourseDetail(id).then(function(data) {
         data["reviews"] = data.reviews.filter(function(r) {
             return r.review_text !== undefined;
         });
-        res.send(JSON.stringify(data));
+        var mergedResp = objectAssign(data, {responseTime: +new Date() - start});
+        res.send(JSON.stringify(mergedResp));
     });
 })
 
 app.get("/api/search/:query", function(req, res) {
+    var start = +new Date();
     var query = req.params.query;
     Api.getSearchResults(query).then(function(data) {
-        res.send(JSON.stringify(data));
+        var mergedResp = objectAssign(data, {responseTime: +new Date() - start});
+        res.send(JSON.stringify(mergedResp));
     });
 });
 
