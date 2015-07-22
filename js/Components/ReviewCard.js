@@ -1,6 +1,8 @@
 var React = require('react');
 var cx = require('classnames');
 
+const MAXLENGTH = 500;
+
 var ReviewCard = React.createClass({
     getInitialState() {
         return {
@@ -13,7 +15,7 @@ var ReviewCard = React.createClass({
         review: React.PropTypes.string.isRequired,
         workload: React.PropTypes.string
     },
-    trim(data, maxLength = 500) {
+    trim(data, maxLength = MAXLENGTH) {
         if (data.length < maxLength) return data;
         let trimmedData = data.substr(0, maxLength);
         return trimmedData.substr(0, trimmedData.lastIndexOf(' ')) + " ...";
@@ -49,11 +51,20 @@ var ReviewCard = React.createClass({
             'highlight': this.state.isDownvoted
         });
 
+        var buttonClass = cx({
+            'button': true,
+            'button-outlined': this.props.review.length > MAXLENGTH,
+            'button-neutral': this.props.review.length < MAXLENGTH
+        })
+
         return (
             <div className="reviewCard">
               <p> { this.trim(this.props.review) } </p>
               <div className="review-actions">
-                <button className='button button-outlined'>Read More</button>
+                <button className={buttonClass}
+                        disabled={this.props.review.length < MAXLENGTH && 'disabled'} >
+                        Read More
+                </button>
                 <ul>
                     <li onClick={this.addToFav}>
                         <i className={favClass}></i>
