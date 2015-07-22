@@ -42,7 +42,29 @@ app.get("/api/search/:query", function(req, res) {
     var start = +new Date();
     var query = req.params.query;
     Api.getSearchResults(query).then(function(data) {
-        var mergedResp = objectAssign(data, {responseTime: +new Date() - start});
+        var profs = data.professors.map(function(prof) {
+            return {
+                id: prof.id,
+                name: prof.first_name + " " + prof.middle_name + " " + prof.last_name,
+                nugget: prof.nugget
+            };
+        });
+        var courses = data.courses
+            .filter(function(course) {
+                return course.number !== null && course.number !== undefined;
+            })
+            .map(function(course) {
+                return {
+                    id: course.id,
+                    department_id: course.departments_id,
+                    name: course.number + " " + course.name
+                };
+            });
+        var mergedResp = objectAssign(data, {
+            professors: profs,
+            courses: courses,
+            responseTime: +new Date() - start
+        });
         res.send(JSON.stringify(mergedResp));
     });
 });

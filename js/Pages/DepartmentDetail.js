@@ -25,7 +25,7 @@ var DepartmentDetail = React.createClass({
         var id  = this.props.params.id;
         var courses = this.state.courses.map((course) =>
             <div className="cell" key={course.id}>
-                <p><a href={'/#/course/' + course.id}>{course.name}</a></p>
+                <p><a href={'/#/courses/' + course.id}>{course.name}</a></p>
             </div>
         );
         var loader = <p>Loading...</p>;
