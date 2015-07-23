@@ -10,12 +10,21 @@ var Search = React.createClass({
                 courses: [],
                 departments: [],
                 professors: []
-            }
+            },
+            loadingSearch: false,
+            query: ""
         }
     },
     handleKeyPress(e) {
         let query = this.refs.search.getDOMNode().value;
         if (query.length > 2) {
+
+            // signal search call init
+            this.setState({
+                loadingSearch: true,
+                query: query
+            });
+
             Api.getSearchResults(query)
                .then((data) => {
                    let { courses, departments, professors } = data.data;
@@ -24,7 +33,8 @@ var Search = React.createClass({
                            courses: courses,
                            departments: departments,
                            professors: professors
-                       }
+                       },
+                       loadingSearch: false,
                    });
                });
         }
@@ -32,31 +42,41 @@ var Search = React.createClass({
     renderResults(title, data) {
         var items = data.map((d, i) => 
             <li key={i}>
-                <a href={"/#/" + title.toLowerCase() + "/" + d.id}>{d.name}</a>
+                <a href={"/#/" + title + "/" + d.id}>{d.name}</a>
             </li>
         );
-        if (data.length === 0) return null;
+
+        var noResults = <li>No results found</li>;
+
         return (
             <section className="results">
                 <h6>{title}</h6>
-                <ul>{items}</ul>
+                <ul>{items.length > 0 ? items : noResults}</ul>
             </section>
         );
     },
     render() {
-        let { courses, departments, professors } = this.state.searchResults;
+        let results;
+
+        if (this.state.query.length > 0) {
+            // map over the keys and collect results
+            results = ["departments", "professors", "courses"].map((x, i) =>
+                <div key={i}>
+                    {this.renderResults(x, this.state.searchResults[x])}
+                </div>
+            );
+        }
+
         return <div className="search-page">
             <div className='form-element'>
                    <label htmlFor='search'>What are you looking for?</label>
                    <input type='text' id='search' ref="search" 
-                          onKeyPress={debounce(this.handleKeyPress, 500)}
+                          onKeyPress={debounce(this.handleKeyPress, 300)}
                           placeholder='Enter a course, professor, or a department'
                           className='form-input' />
             </div>
             <div className="search-results">
-                { this.renderResults("Departments", departments) }
-                { this.renderResults("Courses", courses) }
-                { this.renderResults("Professors", professors) }
+                { this.state.loadingSearch ? <p>Fetching results ... </p> : results }
             </div>
         </div>;
     }
