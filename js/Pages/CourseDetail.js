@@ -30,6 +30,7 @@ var CourseDetail = React.createClass({
         var reviews = this.state.reviews.map((review) =>
             <ReviewCard key={review.id} 
                         review={review.review_text}
+                        created={review.created}
                         workload={review.workload_text}
                         upvotes={review.upvotes}
                         downvotes={review.downvotes}

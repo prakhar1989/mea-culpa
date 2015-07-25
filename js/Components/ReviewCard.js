@@ -60,6 +60,13 @@ var ReviewCard = React.createClass({
             isExpanded: !this.state.isExpanded
         });
     },
+    formatDate(dateStr) {
+        let d = new Date(Date.parse(dateStr));
+        // This is a shitty hack to compensate for the fact that
+        // there's no strftime function in JS >.<
+        let [day, month, date, year] = d.toDateString().split(' ');
+        return [date, month, year].join(' ')
+    },
     render() {
         var { review, upvotes, downvotes } = this.props;
 
@@ -85,13 +92,29 @@ var ReviewCard = React.createClass({
         })
 
         return (
-            <div className="reviewCard">
+            <div className="review-card">
+
+            <div className='grid-flex-container'>
+                <div className='grid-flex-cell'>
+                    <h2> Professor </h2>
+                    <p><a href="/#/professor/12">Lorem Ipsum</a></p>
+                    <p className="date"> Posted on {this.formatDate(this.props.created)}</p>
+                </div>
+                <div className='grid-flex-cell'>
+                    <h2> Sentiment </h2>
+                    <img src="http://twemoji.maxcdn.com/72x72/1f613.png"
+                         height="36" width="36" />
+                </div>
+            </div>
+                
               <div className="review">
+                <h2> Review </h2>
                 <p> { this.state.visibleText } </p>
               </div>
 
               { this.props.workload ? 
                   <div className="workload">
+                    <h2> Workload </h2>
                     <p> { this.props.workload } </p>
                   </div> : null 
               }
