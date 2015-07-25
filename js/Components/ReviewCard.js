@@ -86,7 +86,16 @@ var ReviewCard = React.createClass({
 
         return (
             <div className="reviewCard">
-              <p> { this.state.visibleText } </p>
+              <div className="review">
+                <p> { this.state.visibleText } </p>
+              </div>
+
+              { this.props.workload ? 
+                  <div className="workload">
+                    <p> { this.props.workload } </p>
+                  </div> : null 
+              }
+
               <div className="review-actions">
                 <button className={buttonClass}
                         onClick={this.handleExpand}
