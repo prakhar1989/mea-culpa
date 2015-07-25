@@ -1,20 +1,21 @@
 var React = require('react');
 var cx = require('classnames');
+var Emoticons = require('../Utils/Emoticon.js');
 
 const MAXLENGTH = 500;
 
 // takes a score and returns a twitter emoji URL
 function getEmoticon(score) {
     if (score < -5) {
-        return "http://twemoji.maxcdn.com/72x72/1f623.png"
+        return Emoticons.DEPRESSING
     } else if (score < 0) {
-        return "http://twemoji.maxcdn.com/72x72/1f614.png"
+        return Emoticons.SAD
     } else if (score < 10) {
-        return "http://twemoji.maxcdn.com/72x72/1f615.png"
+        return Emoticons.NEUTRAL
     } else if (score < 18) {
-        return "http://twemoji.maxcdn.com/72x72/1f600.png"
+        return Emoticons.HAPPY
     } else {
-        return "http://twemoji.maxcdn.com/72x72/1f60d.png"
+        return Emoticons.LOVE
     }
 }
 
@@ -27,7 +28,6 @@ var ReviewCard = React.createClass({
     },
     getInitialState() {
         return {
-            isFav: false,
             isUpvoted: false,
             isDownvoted: false,
             visibleText: "",
@@ -52,9 +52,6 @@ var ReviewCard = React.createClass({
         if (data.length < maxLength) return data;
         let trimmedData = data.substr(0, maxLength);
         return trimmedData.substr(0, trimmedData.lastIndexOf(' ')) + " ...";
-    },
-    addToFav() {
-        this.setState({ isFav: !this.state.isFav });
     },
     upVote() {
         this.setState({
@@ -85,11 +82,6 @@ var ReviewCard = React.createClass({
     render() {
         var { review, upvotes, downvotes } = this.props;
 
-        var favClass = cx({
-            'ion-ios-heart': true,
-            'highlight': this.state.isFav
-        });
-
         var upvoteClass = cx({
             'ion-thumbsup': true,
             'highlight': this.state.isUpvoted
@@ -113,7 +105,6 @@ var ReviewCard = React.createClass({
                 <div className='grid-flex-cell'>
                     <h2> Professor </h2>
                     <p><a href="/#/professor/12">Lorem Ipsum</a></p>
-                    <p className="date"> Posted on {this.formatDate(this.props.created)}</p>
                 </div>
                 <div className='grid-flex-cell'>
                     <h2> Sentiment </h2>
@@ -124,6 +115,9 @@ var ReviewCard = React.createClass({
               <div className="review">
                 <h2> Review </h2>
                 <p> { this.state.visibleText } </p>
+                {this.state.isExpanded ? 
+                    <a onClick={this.handleExpand}>Read Less</a> : 
+                    <a onClick={this.handleExpand}>Read More</a> }
               </div>
 
               { this.props.workload ? 
@@ -133,23 +127,20 @@ var ReviewCard = React.createClass({
                   </div> : null 
               }
 
-              <div className="review-actions">
-                <button className={buttonClass}
-                        onClick={this.handleExpand}
-                        disabled={review.length < MAXLENGTH && 'disabled'} >
-                        { this.state.isExpanded ? "Read Less" : "Read More" }
-                </button>
-                <ul>
-                    <li onClick={this.addToFav}>
-                        <i className={favClass}></i>
-                    </li>
-                    <li onClick={this.upVote}>
-                        <i className={upvoteClass}></i> {upvotes}
-                    </li>
-                    <li onClick={this.downVote}>
-                        <i className={downvoteClass}></i> {downvotes}
-                    </li>
-                </ul>
+              <div className="review-actions grid-flex-container">
+                    <div className='grid-flex-cell'>
+                        <p className="date"> <i className="ion-android-time"></i> {this.formatDate(this.props.created)}</p>
+                    </div>
+                    <div className='grid-flex-cell'>
+                    <ul>
+                        <li onClick={this.upVote}>
+                            <i className={upvoteClass}></i> {upvotes}
+                        </li>
+                        <li onClick={this.downVote}>
+                            <i className={downvoteClass}></i> {downvotes}
+                        </li>
+                    </ul>
+                    </div>
               </div>
             </div>
         )

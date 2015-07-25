@@ -28,7 +28,6 @@ div.review-card
   border: 1px solid darken($gray, 10%)
   margin-bottom: 20px
   div.review, div.workload, div.grid-flex-cell
-    position: relative
     padding: 0 35px
     margin: 20px 0
   div.review, div.workload
@@ -38,7 +37,7 @@ div.review-card
     text-transform: uppercase
     font-size: 10px
     letter-spacing: 5px
-    color: darken($gray, 30%)
+    color: darken($gray, 60%)
     margin: 0
   p
     margin: 0
@@ -49,12 +48,19 @@ div.review-card
       font-size: 13px
   p.date
     font-style: italic
+    font-size: 13px
+    margin-top: 8px
+  div.review
+    a
+      font-size: 12px
+      text-decoration: underline
   div.review-actions
     border-top: 1px solid darken($gray, 10%)
-    padding: 10px 30px 10px 35px
+    div.grid-flex-cell
+      margin: 10px 0
     ul
       margin: 0
-      display: inline-block
+      padding: 0
       float: right
     ul li
       list-style-type: none
