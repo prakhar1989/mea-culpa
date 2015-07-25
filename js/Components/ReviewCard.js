@@ -4,18 +4,29 @@ var cx = require('classnames');
 const MAXLENGTH = 500;
 
 var ReviewCard = React.createClass({
+    getDefaultProps() {
+        return {
+            upvotes: 0,
+            downvotes: 0
+        }
+    },
     getInitialState() {
         return {
             isFav: false,
             isUpvoted: false,
             isDownvoted: false,
             visibleText: "",
-            isExpanded: false
+            isExpanded: false,
+            upvotes: this.props.upvotes,
+            downvotes: this.props.downvotes
         }
     },
     propTypes: {
         review: React.PropTypes.string.isRequired,
-        workload: React.PropTypes.string
+        workload: React.PropTypes.string,
+        upvotes: React.PropTypes.number.isRequired,
+        downvotes: React.PropTypes.number.isRequired,
+        sentiment_score: React.PropTypes.number.isRequired
     },
     componentDidMount() {
         this.setState({
@@ -50,6 +61,8 @@ var ReviewCard = React.createClass({
         });
     },
     render() {
+        var { review, upvotes, downvotes } = this.props;
+
         var favClass = cx({
             'ion-ios-heart': true,
             'highlight': this.state.isFav
@@ -67,8 +80,8 @@ var ReviewCard = React.createClass({
 
         var buttonClass = cx({
             'button': true,
-            'button-outlined': this.props.review.length > MAXLENGTH,
-            'button-neutral': this.props.review.length < MAXLENGTH
+            'button-outlined': review.length > MAXLENGTH,
+            'button-neutral': review.length < MAXLENGTH
         })
 
         return (
@@ -77,7 +90,7 @@ var ReviewCard = React.createClass({
               <div className="review-actions">
                 <button className={buttonClass}
                         onClick={this.handleExpand}
-                        disabled={this.props.review.length < MAXLENGTH && 'disabled'} >
+                        disabled={review.length < MAXLENGTH && 'disabled'} >
                         { this.state.isExpanded ? "Read Less" : "Read More" }
                 </button>
                 <ul>
@@ -85,10 +98,10 @@ var ReviewCard = React.createClass({
                         <i className={favClass}></i>
                     </li>
                     <li onClick={this.upVote}>
-                        <i className={upvoteClass}></i>
+                        <i className={upvoteClass}></i> {upvotes}
                     </li>
                     <li onClick={this.downVote}>
-                        <i className={downvoteClass}></i>
+                        <i className={downvoteClass}></i> {downvotes}
                     </li>
                 </ul>
               </div>

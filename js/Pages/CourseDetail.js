@@ -30,7 +30,10 @@ var CourseDetail = React.createClass({
         var reviews = this.state.reviews.map((review) =>
             <ReviewCard key={review.id} 
                         review={review.review_text}
-                        workload={review.workload_text} />
+                        workload={review.workload_text}
+                        upvotes={review.upvotes}
+                        downvotes={review.downvotes}
+                        sentiment_score={review.sentiment_score} />
         );
         var loader = <p>Loading...</p>;
         var error = <p>No reviews found</p>;

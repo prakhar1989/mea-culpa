@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var Api = require('./api');
 var objectAssign = require('object-assign');
+var sentiment = require('sentiment');
 
 // allow CORS
 app.all('/*', function(req, res, next) {
@@ -32,6 +33,13 @@ app.get('/api/course/:id', function(req, res) {
     Api.getCourseDetail(id).then(function(data) {
         data["reviews"] = data.reviews.filter(function(r) {
             return r.review_text !== undefined;
+        }).map(function(r) {
+            r["sentiment_score"] = sentiment(r.review_text).score;
+
+            // placeholders for upvotes and downvotes
+            r["upvotes"] = Math.round(Math.random() * 20);
+            r["downvotes"] = Math.round(Math.random() * 20);
+            return r;
         });
         var mergedResp = objectAssign(data, {responseTime: +new Date() - start});
         res.send(JSON.stringify(mergedResp));
