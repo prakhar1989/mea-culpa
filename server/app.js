@@ -1,8 +1,9 @@
 var express = require('express');
-var app = express();
 var Api = require('./api');
-var objectAssign = require('object-assign');
 var sentiment = require('sentiment');
+
+// instantiate express app
+var app = express();
 
 // allow CORS
 app.all('/*', function(req, res, next) {
@@ -11,19 +12,19 @@ app.all('/*', function(req, res, next) {
   next();
 });
 
+// for heroku
 app.set('port', (process.env.PORT || 5000));
 
 app.get('/', function(req, res) {
     res.send(JSON.stringify({msg: "mea culpa!"}));
 });
 
-// TODO: Try to make the responseTime thing DRY'er
 app.get('/api/department/:id', function(req, res) {
     var start = +new Date();
     var id = req.params.id;
     Api.getDepartmentDetail(id).then(function(data) {
-        var mergedResp = objectAssign(data, {responseTime: +new Date() - start});
-        res.send(JSON.stringify(mergedResp));
+        data["responseTime"] = +new Date() - start;
+        res.send(JSON.stringify(data));
     });
 });
 
@@ -31,9 +32,11 @@ app.get('/api/course/:id', function(req, res) {
     var start = +new Date();
     var id = req.params.id;
     Api.getCourseDetail(id).then(function(data) {
+        // filtering blank reviews
         data["reviews"] = data.reviews.filter(function(r) {
             return r.review_text !== undefined;
         }).map(function(r) {
+            // adding extra props
             r["sentiment_score"] = sentiment(r.review_text).score;
 
             // placeholders for upvotes and downvotes
@@ -41,8 +44,18 @@ app.get('/api/course/:id', function(req, res) {
             r["downvotes"] = Math.round(Math.random() * 20);
             return r;
         });
-        var mergedResp = objectAssign(data, {responseTime: +new Date() - start});
-        res.send(JSON.stringify(mergedResp));
+
+        // sorting by date
+        data["reviews"] = data.reviews.sort(function(r1, r2) {
+            var d1 = Date.parse(r1.created);
+            var d2 = Date.parse(r2.created);
+            if (d1 < d2) return 1;
+            else if (d1 > d2) return -1;
+            else return r1.review_text < r2.review_text;
+        });
+
+        data["responseTime"] = +new Date() - start;
+        res.send(JSON.stringify(data));
     });
 })
 
