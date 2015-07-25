@@ -3,6 +3,21 @@ var cx = require('classnames');
 
 const MAXLENGTH = 500;
 
+// takes a score and returns a twitter emoji URL
+function getEmoticon(score) {
+    if (score < -5) {
+        return "http://twemoji.maxcdn.com/72x72/1f623.png"
+    } else if (score < 0) {
+        return "http://twemoji.maxcdn.com/72x72/1f614.png"
+    } else if (score < 10) {
+        return "http://twemoji.maxcdn.com/72x72/1f615.png"
+    } else if (score < 18) {
+        return "http://twemoji.maxcdn.com/72x72/1f600.png"
+    } else {
+        return "http://twemoji.maxcdn.com/72x72/1f60d.png"
+    }
+}
+
 var ReviewCard = React.createClass({
     getDefaultProps() {
         return {
@@ -65,7 +80,7 @@ var ReviewCard = React.createClass({
         // This is a shitty hack to compensate for the fact that
         // there's no strftime function in JS >.<
         let [day, month, date, year] = d.toDateString().split(' ');
-        return [date, month, year].join(' ')
+        return `${date} ${month}, ${year}`
     },
     render() {
         var { review, upvotes, downvotes } = this.props;
@@ -102,8 +117,7 @@ var ReviewCard = React.createClass({
                 </div>
                 <div className='grid-flex-cell'>
                     <h2> Sentiment </h2>
-                    <img src="http://twemoji.maxcdn.com/72x72/1f613.png"
-                         height="36" width="36" />
+                    <img src={getEmoticon(this.props.sentiment_score)} height="24" width="24" />
                 </div>
             </div>
                 
