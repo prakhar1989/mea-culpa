@@ -81,12 +81,10 @@ app.get("/api/search/:query", function(req, res) {
                     name: course.number + " " + course.name
                 };
             });
-        var mergedResp = objectAssign(data, {
-            professors: profs,
-            courses: courses,
-            responseTime: +new Date() - start
-        });
-        res.send(JSON.stringify(mergedResp));
+        data["professors"] = profs;
+        data["courses"] = courses;
+        data["responseTime"] = +new Date() - start;
+        res.send(JSON.stringify(data));
     });
 });
 

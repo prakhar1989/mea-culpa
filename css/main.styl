@@ -130,3 +130,12 @@ div.search-results
     font-size: 13px
     font-style: italic
     color: $highlightBlue
+
+// for smaller device
+@media (max-width: $breakpoint-mid-mobile)
+  div.grid-flex-cell
+    flex: 0 0 50%
+  div.review-card
+    div.review, div.workload, div.grid-flex-cell
+      padding: 0 20px
+
