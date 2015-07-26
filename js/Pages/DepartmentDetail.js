@@ -1,5 +1,4 @@
 var React = require('react');
-var Router = require('react-router');
 var Api = require('../Utils/Api');
 var DepartmentCard = require('../Components/DepartmentCard');
 
@@ -22,7 +21,6 @@ var DepartmentDetail = React.createClass({
         }
     },
     render() {
-        var id  = this.props.params.id;
         var courses = this.state.courses.map((course) =>
             <div className="cell" key={course.id}>
                 <p><a href={'/#/courses/' + course.id}>{course.name}</a></p>

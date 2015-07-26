@@ -32,10 +32,12 @@ app.get('/api/course/:id', function(req, res) {
     var start = +new Date();
     var id = req.params.id;
     Api.getCourseDetail(id).then(function(data) {
+
         // filtering blank reviews
         data["reviews"] = data.reviews.filter(function(r) {
             return r.review_text !== undefined;
-        }).map(function(r) {
+        })
+        .map(function(r) {
             // adding extra props
             r["sentiment_score"] = sentiment(r.review_text).score;
 
@@ -54,9 +56,15 @@ app.get('/api/course/:id', function(req, res) {
             else return r1.review_text < r2.review_text;
         });
 
-        data["responseTime"] = +new Date() - start;
-        res.send(JSON.stringify(data));
-    });
+        return data;
+    }).then(function(courseData) {
+        var deptId = courseData.info.department_ids[0];
+        Api.getDepartmentInfo(deptId).then(function(data) {
+            courseData["department"] = data.data.departments;
+            courseData["responseTime"] = +new Date() - start;
+            res.send(JSON.stringify(courseData));
+        })
+    })
 })
 
 app.get("/api/search/:query", function(req, res) {

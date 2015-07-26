@@ -78,6 +78,7 @@ function getCourseDetail(courseId) {
 
 module.exports = {
     getDepartmentDetail: getDepartmentDetail,
+    getDepartmentInfo: getDepartmentInfo,
     getCourseDetail: getCourseDetail,
     getSearchResults: combineSearchResults
 }

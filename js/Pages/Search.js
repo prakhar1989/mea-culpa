@@ -1,5 +1,4 @@
 var React = require('react');
-var Router = require('react-router');
 var Api = require('../Utils/Api');
 var debounce = require('lodash/function/debounce');
 

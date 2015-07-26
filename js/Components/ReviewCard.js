@@ -76,7 +76,7 @@ var ReviewCard = React.createClass({
         let d = new Date(Date.parse(dateStr));
         // This is a shitty hack to compensate for the fact that
         // there's no strftime function in JS >.<
-        let [day, month, date, year] = d.toDateString().split(' ');
+        let [_, month, date, year] = d.toDateString().split(' ');
         return `${date} ${month}, ${year}`
     },
     render() {
@@ -91,12 +91,6 @@ var ReviewCard = React.createClass({
             'ion-thumbsdown': true,
             'highlight': this.state.isDownvoted
         });
-
-        var buttonClass = cx({
-            'button': true,
-            'button-outlined': review.length > MAXLENGTH,
-            'button-neutral': review.length < MAXLENGTH
-        })
 
         return (
             <div className="review-card">
