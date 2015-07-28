@@ -1,6 +1,5 @@
 var React = require('react');
 var Api = require('../Utils/Api');
-var DepartmentCard = require('../Components/DepartmentCard');
 
 var DepartmentDetail = React.createClass({
     componentDidMount() {

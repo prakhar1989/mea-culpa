@@ -80,7 +80,7 @@ var ReviewCard = React.createClass({
         return `${date} ${month}, ${year}`
     },
     render() {
-        var { review, upvotes, downvotes } = this.props;
+        var { upvotes, downvotes } = this.props;
 
         var upvoteClass = cx({
             'ion-thumbsup': true,

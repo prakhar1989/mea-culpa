@@ -1,5 +1,4 @@
 var React = require('react');
-var Router = require('react-router');
 var Api = require('../Utils/Api');
 var ReviewCard = require('../Components/ReviewCard');
 
@@ -29,7 +28,6 @@ var CourseDetail = React.createClass({
         }
     },
     render() {
-        var id = this.props.params.id;
         var { reviews, name, department } = this.state;
 
         var reviews = reviews.map((review) =>
