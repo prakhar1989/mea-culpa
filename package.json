@@ -12,7 +12,7 @@
   },
   "author": "Prakhar Srivastav",
   "license": "MIT",
-  "repository": "https://github.com/prakhar1989/react-surveyman",
+  "repository": "https://github.com/prakhar1989/mea-culpa",
   "dependencies": {
     "axios": "^0.5.4",
     "classnames": "^2.1.3",
