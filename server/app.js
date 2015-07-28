@@ -97,6 +97,15 @@ app.get("/api/search/:query", function(req, res) {
     });
 });
 
+app.get("/api/professor/:id", function(req, res) {
+    var start = +new Date();
+    var id = req.params.id;
+    Api.getProfessorDetail(id).then(function(data) {
+        data["responseTime"] = +new Date() - start;
+        res.send(JSON.stringify(data));
+    });
+});
+
 var server = app.listen(app.get('port'), function() {
     console.log("App started on :" + app.get('port'));
 });
