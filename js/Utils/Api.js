@@ -1,6 +1,6 @@
 var axios = require('axios');
 
-const URL = "https://nameless-dawn-4159.herokuapp.com/api";
+const URL = "https://meaculpa.herokuapp.com/api";
 //const URL = "http://localhost:5000/api";
 
 module.exports = {

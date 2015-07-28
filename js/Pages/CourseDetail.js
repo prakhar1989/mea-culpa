@@ -8,12 +8,14 @@ var CourseDetail = React.createClass({
         var id = this.props.params.id;
         Api.getCourseDetail(id)
            .then((data) => {
-                var { info: {name, number}, reviews } = data.data;
+                var { info: {name, number}, reviews, department } = data.data;
+
                 if (this.isMounted()) {
                     this.setState({ 
                         name: name,
                         number: number,
-                        reviews: reviews 
+                        reviews: reviews,
+                        department: department
                     });
                 }
            });
@@ -22,12 +24,15 @@ var CourseDetail = React.createClass({
         return {
             name: "",
             number: "",
-            reviews: []
+            reviews: [],
+            department: {}
         }
     },
     render() {
         var id = this.props.params.id;
-        var reviews = this.state.reviews.map((review) =>
+        var { reviews, name, department } = this.state;
+
+        var reviews = reviews.map((review) =>
             <ReviewCard key={review.id} 
                         review={review.review_text}
                         created={review.created}
@@ -40,8 +45,20 @@ var CourseDetail = React.createClass({
         var error = <p>No reviews found</p>;
         var deptHtml = (
             <div>
-                <h4>{this.state.name}</h4>
-                { this.state.reviews.length > 0 ? reviews : error }
+               <nav role="navigation">
+                <ul className="list-unstyled list-inline breadcrumbs">
+                  <li><a href="/#/departments/all">All Departments</a>›</li>
+                  <li>
+                      <a href={"/#/departments/" + department.id} className="current-item">
+                        {department.name}
+                      </a>
+                  </li>
+                </ul>
+              </nav>
+
+              <h5>{name}</h5>
+
+              { this.state.reviews.length > 0 ? reviews : error }
             </div>
         );
         return (
