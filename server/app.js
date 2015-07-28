@@ -58,9 +58,10 @@ app.get('/api/course/:id', function(req, res) {
 
         return data;
     }).then(function(courseData) {
+        // Note: We're only listing the first department
         var deptId = courseData.info.department_ids[0];
         Api.getDepartmentInfo(deptId).then(function(data) {
-            courseData["department"] = data.data.departments;
+            courseData["department"] = data.data.departments[0];
             courseData["responseTime"] = +new Date() - start;
             res.send(JSON.stringify(courseData));
         })
