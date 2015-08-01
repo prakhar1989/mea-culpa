@@ -84,15 +84,20 @@ div.review-card
       text-transform: uppercase
       padding: 6px 8px
 
-h2.deptCard 
-  border: 1px solid $gray
-  display: inline-block
-  font-size: 20px
-  padding: 20px
-  min-width: 120px
-  margin-right: 20px
-  a 
-    color: black
+div.all-depts
+  display: flex
+  flex-wrap: wrap
+  h2.deptCard
+    border: 1px solid $gray
+    font-size: 15px
+    padding-top: 39px
+    flex-wrap: wrap
+    height: 95px
+    width: calc(33.33% - 10px)
+    margin: 5px
+    text-align: center
+    a
+      color: black
 
 header#banner
   text-align: center

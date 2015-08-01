@@ -92,6 +92,10 @@ var ReviewCard = React.createClass({
             'highlight': this.state.isDownvoted
         });
 
+        var toggleVisibility = this.state.isExpanded ? 
+                <a onClick={this.handleExpand}>Read Less</a> : 
+                <a onClick={this.handleExpand}>Read More</a>;
+
         return (
             <div className="review-card">
 
@@ -109,9 +113,7 @@ var ReviewCard = React.createClass({
               <div className="review">
                 <h2> Review </h2>
                 <p> { this.state.visibleText } </p>
-                {this.state.isExpanded ? 
-                    <a onClick={this.handleExpand}>Read Less</a> : 
-                    <a onClick={this.handleExpand}>Read More</a> }
+                { this.props.review.length < MAXLENGTH ? null : toggleVisibility }
               </div>
 
               { this.props.workload ? 

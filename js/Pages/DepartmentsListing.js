@@ -8,7 +8,7 @@ var DepartmentsListing = React.createClass({
         var depts = data.departments.map((d) =>
             <DepartmentCard title={d.title} key={d.id} url={url + d.id} />
         );
-        return <div> { depts } </div>
+        return <div className="all-depts"> { depts } </div>
     }
 });
 
