@@ -15,11 +15,14 @@
   "repository": "https://github.com/prakhar1989/mea-culpa",
   "dependencies": {
     "axios": "^0.5.4",
+    "body-parser": "^1.13.3",
     "classnames": "^2.1.3",
+    "cors": "^2.7.1",
     "express": "^4.13.1",
     "lodash": "^3.10.0",
     "react": "^0.13.3",
     "react-router": "^0.13.3",
+    "response-time": "^2.3.1",
     "sentiment": "^1.0.2"
   },
   "devDependencies": {

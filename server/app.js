@@ -1,35 +1,33 @@
 var express = require('express');
 var Api = require('./api');
 var sentiment = require('sentiment');
+var bodyParser = require('body-parser');
+var cors = require('cors');
+var responseTime = require('response-time');
 
 // instantiate express app
 var app = express();
 
-// allow CORS
-app.all('/*', function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "X-Requested-With");
-  next();
-});
+// middleware config
+app.use(cors());
+app.use(bodyParser.json());
+app.use(responseTime());
 
 // for heroku
 app.set('port', (process.env.PORT || 5000));
 
 app.get('/', function(req, res) {
-    res.send(JSON.stringify({msg: "mea culpa!"}));
+    res.send({msg: "mea culpa"});
 });
 
 app.get('/api/department/:id', function(req, res) {
-    var start = +new Date();
     var id = req.params.id;
     Api.getDepartmentDetail(id).then(function(data) {
-        data["responseTime"] = +new Date() - start;
-        res.send(JSON.stringify(data));
+        res.send(data);
     });
 });
 
 app.get('/api/course/:id', function(req, res) {
-    var start = +new Date();
     var id = req.params.id;
     Api.getCourseDetail(id).then(function(data) {
 
@@ -58,18 +56,16 @@ app.get('/api/course/:id', function(req, res) {
 
         return data;
     }).then(function(courseData) {
-        // Note: We're only listing the first department
+        // NOTE: We're only listing the first department
         var deptId = courseData.info.department_ids[0];
         Api.getDepartmentInfo(deptId).then(function(data) {
             courseData["department"] = data.data.departments[0];
-            courseData["responseTime"] = +new Date() - start;
-            res.send(JSON.stringify(courseData));
+            res.send(courseData);
         })
     })
 })
 
 app.get("/api/search/:query", function(req, res) {
-    var start = +new Date();
     var query = req.params.query;
     Api.getSearchResults(query).then(function(data) {
         var profs = data.professors.map(function(prof) {
@@ -92,17 +88,14 @@ app.get("/api/search/:query", function(req, res) {
             });
         data["professors"] = profs;
         data["courses"] = courses;
-        data["responseTime"] = +new Date() - start;
-        res.send(JSON.stringify(data));
+        res.send(data);
     });
 });
 
 app.get("/api/professor/:id", function(req, res) {
-    var start = +new Date();
     var id = req.params.id;
     Api.getProfessorDetail(id).then(function(data) {
-        data["responseTime"] = +new Date() - start;
-        res.send(JSON.stringify(data));
+        res.send(data);
     });
 });
 
